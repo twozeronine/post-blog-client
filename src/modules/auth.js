@@ -17,7 +17,7 @@ export const changeField = createAction(
   }),
 );
 
-export const initalizeForm = createAction(INITIALIZE_FORM, (form) => form); //register / login
+export const initializeForm = createAction(INITIALIZE_FORM, (form) => form); //register / login
 
 // 초기 상태 설정
 const initialState = {
