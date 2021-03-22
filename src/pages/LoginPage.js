@@ -5,7 +5,7 @@ import AuthForm from "../components/auth/AutoForm";
 const LoginPage = () => {
   return (
     <AuthTemplate>
-      <AuthForm />
+      <AuthForm type="login" />
     </AuthTemplate>
   );
 };
