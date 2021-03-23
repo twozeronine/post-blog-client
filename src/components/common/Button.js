@@ -1,9 +1,9 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import palette from "../../lib/styles/palette";
 
-const StyledButton = styled.button`
+const buttonStyle = css`
   // 테두리 없음
   border: none;
   // 모서리 각도
@@ -37,16 +37,21 @@ const StyledButton = styled.button`
     `}
 `;
 
-const Button = ({ to, history, ...rest }) => {
-  const onClick = (e) => {
-    // to가 있다면 to로 페이지 이동
-    if (to) {
-      history.push(to);
-    }
-    if (rest.onClick) {
-      rest.onClick(e);
-    }
-  };
-  return <StyledButton {...rest} onClick={onClick} />;
+const StyledButton = styled.button`
+  ${buttonStyle}
+`;
+
+const StyledLink = styled(Link)`
+  ${buttonStyle}
+`;
+
+const Button = (props) => {
+  return props.to ? (
+    /* props.cyan 값을 숫자 1과 0으로 바꾼이유는 
+       styled() 함수로 감싸서 만든 컴포넌트의 경우에는 임의 props가 필터링 되지않기때문 */
+    <StyledLink {...props} cyan={props.cyan ? 1 : 0} />
+  ) : (
+    <StyledButton {...props} />
+  );
 };
-export default withRouter(Button);
+export default Button;
