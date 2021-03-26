@@ -5,10 +5,14 @@ import PostPage from "./pages/PostPage";
 import WritePage from "./pages/WritePage";
 import PostListPage from "./pages/PostListPage";
 import RegisterPage from "./pages/RegisterPage";
+import { Helmet } from "react-helmet-async";
 
 function App() {
   return (
     <>
+      <Helmet>
+        <title>YOUNG-blog</title>
+      </Helmet>
       <Route component={PostListPage} path={["/@:username", "/"]} exact />
       <Route component={LoginPage} path="/login" />
       <Route component={RegisterPage} path="/register" />
