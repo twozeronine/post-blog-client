@@ -13,6 +13,14 @@ const [
   WRITE_POST_SUCCESS,
   WRITE_POST_FAILURE,
 ] = createRequestActionTypes("write/WRITE_POST"); // 포스트 작성
+const SET_ORIGINAL_POST = "write/SET_ORIGINAL_POST";
+
+// 수정을 위한 액션 타입 설정
+const [
+  UPDATE_POST,
+  UPDATE_POST_SUCCESS,
+  UPDATE_POST_FAILURE,
+] = createRequestActionTypes("write/UPDATE_POST"); // 포스트 수정
 
 // 액션 객체 생성 함수
 export const initialize = createAction(INITIALIZE);
@@ -20,8 +28,19 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
 }));
-
-// saga를 위한 액션 객체 생성 함수
+// 수정 버튼을 눌렀을시 해당 포스터의 내용을 복사 하기 위한 액션
+export const setOriginalPost = createAction(SET_ORIGINAL_POST, (post) => post);
+// 수정 버튼을 누른 포스트에서 글쓰기를 누를때 실행되는 액션
+export const updatePost = createAction(
+  UPDATE_POST,
+  ({ id, title, body, tags }) => ({
+    id,
+    title,
+    body,
+    tags,
+  }),
+);
+// 글쓰기 버튼을 누를때 실행되는 액션
 export const writePost = createAction(WRITE_POST, ({ title, body, tags }) => ({
   title,
   body,
@@ -30,8 +49,11 @@ export const writePost = createAction(WRITE_POST, ({ title, body, tags }) => ({
 
 // saga 생성
 const writePostSaga = createRequestSaga(WRITE_POST, postsAPI.writePost);
+const updatePostSaga = createRequestSaga(UPDATE_POST, postsAPI.updatePost);
+
 export function* writeSaga() {
   yield takeLatest(WRITE_POST, writePostSaga);
+  yield takeLatest(UPDATE_POST, updatePostSaga);
 }
 
 // 초기 상태 설정
@@ -41,6 +63,7 @@ const initialState = {
   tags: [],
   post: null,
   postError: null,
+  originalPostId: null,
 };
 
 // 리듀서 설정
@@ -65,6 +88,21 @@ const write = handleActions(
     }),
     // 포스트 작성 실패
     [WRITE_POST_FAILURE]: (state, { payload: postError }) => ({
+      ...state,
+      postError,
+    }),
+    [SET_ORIGINAL_POST]: (state, { payload: post }) => ({
+      ...state,
+      title: post.title,
+      body: post.body,
+      tags: post.tags,
+      originalPostId: post._id,
+    }),
+    [UPDATE_POST_SUCCESS]: (state, { payload: post }) => ({
+      ...state,
+      post,
+    }),
+    [UPDATE_POST_FAILURE]: (state, { payload: postError }) => ({
       ...state,
       postError,
     }),
