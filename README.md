@@ -32,11 +32,6 @@ axios를 사용하여 API를 호출합니다.
 
 Redux-saga 미들웨어를 사용하여 API 요청과 같은 비동기적 작업을 관리합니다.
 
-## 보안
-
-글쓰기를 할 때 악성코드 삽입 방지를 위하여
-sanitize-html 라이브러리를 사용하여 HTML을 필터링하였습니다.
-
 ## 배포
 
 배포하는 웹서버를 nginx를 사용하여 새로 구현하지 않고 API를 제공하는 [post-blog-server](https://github.com/twozeronine/post-blog-server) 서버에서 koa-static을 사용하여 정적 파일을 제공하도록 통합해서 구현하였습니다.
