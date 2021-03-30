@@ -1,70 +1,84 @@
-# Getting Started with Create React App
+# post-blog-client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> [post-blog-server](https://github.com/twozeronine/post-blog-server) 바로가기
 
-## Available Scripts
+간단한 포스트를 작성, 읽기, 수정, 삭제 등 할 수 있는 CRUD 블로그 웹 앱의 client입니다.
 
-In the project directory, you can run:
+## 스타일
 
-### `yarn start`
+styled-components를 사용하여 스타일을 적용하였고
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 라우터
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+react-router-dom를 사용하여  
+LoginPage, RegisterPage, WritePage, PostPage, PostListPage 총 5개의 페이지를 구현하였습니다.
 
-### `yarn test`
+서버에서 제공하는 HTTP 헤더에 'last-page'를 받아와서 PostListPage에서 페이지네이션 기능을 구현하였습니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 상태관리
 
-### `yarn build`
+React-redux를 사용하여 상태관리를 합니다  
+Ducks 패턴으로 redux관련 파일은 모두 modules에 작성했습니다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Container-Presenter 디자인 패턴으로 데이터 처리와 데이터 출력을 하는 파일들을 나눠서 작성하였습니다.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Container Components는 containers  
+Presentational Components는 components  
+폴더에서 확인할 수 있습니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## API 서버와 연동
 
-### `yarn eject`
+axios를 사용하여 API를 호출합니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Redux-saga 미들웨어를 사용하여 API 요청과 같은 비동기적 작업을 관리합니다.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 보안
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+글쓰기를 할 때 악성코드 삽입 방지를 위하여
+sanitize-html 라이브러리를 사용하여 HTML을 필터링하였습니다.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+> [Young-blog](https://blog-axhvl5dnbq-an.a.run.app/) 배포된 사이트입니다.
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## page
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 회원가입
 
-### Code Splitting
+"/register"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 로그인
 
-### Analyzing the Bundle Size
+"/login"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 포스트 작성
 
-### Making a Progressive Web App
+"/write"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 포스트 목록 조회
 
-### Advanced Configuration
+"/" ,"/?tag" , "/@:username"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 포스트 조회
 
-### Deployment
+"/@:username/:postId"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `yarn build` fails to minify
+## Environments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- axios@0.21.1
+- immer@9.0.1
+- qs@6.10.1
+- quill@1.3.7
+- react@17.0.1
+- react-dom@17.0.1
+- react-helmet-async@1.0.9
+- react-redux@7.2.2
+- react-router-dom@5.2.0
+- react-scripts@4.0.3
+- redux@4.0.5
+- redux-actions@2.6.5
+- redux-devtools-extension@2.13.9
+- redux-saga@1.1.3
+- styled-components@5.2.1
